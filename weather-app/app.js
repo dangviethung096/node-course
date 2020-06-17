@@ -1,4 +1,29 @@
 const request = require('postman-request')
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
+
+const address = process.argv[2]
+
+if (address) {
+    geocode(process.argv[2], (error, { latitude, longitude, location }) => {
+        if (error) {
+           return console.log(error)
+        } 
+    
+    
+        forecast(latitude, longitude, (error, forecastData) => {
+            if (error) {
+                return console.log(error)
+            }
+            
+            console.log('Location ', location)
+            console.log('Data', forecastData)
+        })
+    })    
+
+} else {
+    console.log('Please provide the address')
+}
 
 const url = 'http://api.weatherstack.com/current?access_key=a9599c10141361f74c0b1cbc90a3afec&query=21.06800339805846,105.8114519633448&units=f'
 const urlGeo = 'https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1IjoiZGFuZ3ZpZXRodW5nMDk2IiwiYSI6ImNrYmkyYW9mZTA3dngyc3BmcGlxMzRlMGMifQ.l030FJ0ZESFmaHrVIa_Mtg&limit'
@@ -19,4 +44,3 @@ request({ url : urlGeo, json: true}, (err, res) => {
 
     // console.log('Long = ' + longitude + ', Lat = ' + latitude)
 })
-
