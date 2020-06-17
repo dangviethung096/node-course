@@ -7,12 +7,17 @@ const request = http.request(url, (response) => {
 
     response.on('data', (chunk) => {
         data = data + chunk.toString()
-        console.log(data)
+        // console.log(data)
     })
 
     response.on('end', () => {
-
+        const body = JSON.parse(data)
+        console.log(body)
     })
+})
+
+request.on('error', (error) => {
+    console.log('An error', error)
 })
 
 request.end()
