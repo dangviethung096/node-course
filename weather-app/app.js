@@ -1,10 +1,29 @@
 const request = require('postman-request')
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
 
-const url = 'http://api.weatherstack.com/current?access_key=a9599c10141361f74c0b1cbc90a3afec&query=21.06800339805846,105.8114519633448'
+const address = process.argv[2]
 
-request({ url: url, json: true }, (err, res) => {
-    // const data = JSON.parse(res.body).current
+if (address) {
+    geocode(process.argv[2], (error, { latitude, longitude, location }) => {
+        if (error) {
+           return console.log(error)
+        } 
+    
+    
+        forecast(latitude, longitude, (error, forecastData) => {
+            if (error) {
+                return console.log(error)
+            }
+            
+            console.log('Location ', location)
+            console.log('Data', forecastData)
+        })
+    })    
 
-    // console.log(res.body.current)
-    console.log('It is currently ' + res.body.current.temperature + ' degress, it feels like ' + res.body.current.feelslike + ' degress out.')
-})
+} else {
+    console.log('Please provide the address')
+}
+
+
+
