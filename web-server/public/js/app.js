@@ -1,0 +1,1 @@
+console.log('Client side javacript side is loaded')
