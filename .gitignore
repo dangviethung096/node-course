@@ -3,3 +3,5 @@ notes-app/node_modules
 node_modules
 weaather-app/node_modules/**
 weaather-app/node_modules
+.vscode/**
+.vscode
