@@ -34,12 +34,12 @@ const product = {
 // console.log(productLabel)
 // console.log(rating)
 
-const { age = 10 } = product
+// const { age = 10 } = product
 
-console.log(age)
+// console.log(age)
 
-// const transaction = (type, { label, stock }) => {
-//     console.log(type, label, stock)
-// }
+const transaction = (type, { label, stock = 0 } = {}) => {
+    console.log(type, label, stock)
+}
 
-// transaction('order', product) 
+transaction('order', product) 
