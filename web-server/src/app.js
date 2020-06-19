@@ -1,7 +1,8 @@
 const express = require('express')
 const path = require('path')
 const hbs = require('hbs')
-
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
 
 // Define path for Express config
 const app = express()
@@ -42,19 +43,56 @@ app.get('/about', (req, res) => {
 
 // app.com/weather
 app.get('/weather', (req, res) => {
+    if (!req.query.address) {
+        return res.send({
+            error: 'Please provide the address'
+        })
+    }
+
+    geocode(req.query.address, (error, geoData) => {
+        if (error) {
+            return res.send({
+                error: error
+            })
+        } 
+
+        forecast(geoData.latitude, geoData.longitude, (error, data) => {
+            if (error) {
+                return res.send({
+                    error: error
+                })
+            } else {
+                res.send({
+                    forecast: data,
+                    location: geoData.location
+                })
+            }
+        })
+
+        
+    })
+})
+
+app.get('/products', (req, res) => {
+    // Check search
+    if (!req.query.search) {
+        return res.send({
+            error: 'You must provide a search term'
+        })
+    }
+
+    console.log(req.query)
+    
     res.send({
-        forecast: 'Rainny',
-        location: 'Ha noi',
-        title: 'Weather',
-        name: 'Hung'
+        products: []
     })
 })
 
 // Match a bundle
 app.get('/help/*', (req, res) => {
     res.render('404', {
-        title: 'Not found',
-        message: 'Help not found',
+        title: '404',
+        message: 'Help article not found',
         name: 'Hung'
     })
 })
@@ -62,11 +100,12 @@ app.get('/help/*', (req, res) => {
 // 404 not found
 app.get('*', (req, res) => {
     res.render('404', {
-        title: 'Not found',
+        title: '404',
         message: 'Page not found',
         name: 'Hung'
     })
 })
+
 
 app.listen(3000, () => {
     console.log('Server is up on port 3000')
