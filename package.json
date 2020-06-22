@@ -8,6 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "start": "node web-server/src/app.js",
     "web-server": "node web-server/src/app.js"
   },
   "repository": {
