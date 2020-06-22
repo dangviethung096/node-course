@@ -8,10 +8,12 @@
     "hbs": "^4.1.1",
     "postman-request": "^2.88.1-postman.23"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
   "scripts": {
     "start": "node web-server/src/app.js",
-    "web-server": "node web-server/src/app.js"
+    "dev": "nodemon web-server/src/app.js"
   },
   "repository": {
     "type": "git",
