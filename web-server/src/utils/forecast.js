@@ -10,7 +10,9 @@ const forecast = (latitude, longitude, callback) => {
         } else if (body.error) {
             callback('Invalid url', undefined)
         } else {
-            callback(undefined, body.current.weather_descriptions[0] + '. Temperature = ' + body.current.temperature)
+            callback(undefined, body.current.weather_descriptions[0] + 
+                '. Temperature = ' + body.current.temperature + 
+                ', Humidity = ' + body.current.humidity + '%')
         }
     })
 }
