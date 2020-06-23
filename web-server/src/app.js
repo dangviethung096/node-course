@@ -3,6 +3,7 @@ const path = require('path')
 const hbs = require('hbs')
 const geocode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
+const { TIMEOUT } = require('dns')
 
 // Define path for Express config
 const app = express()
@@ -36,10 +37,16 @@ app.get('/help', (req, res) => {
 })
 // app.com/about
 app.get('/about', (req, res) => {
-    res.render('about', {
-        name: 'Dang Viet Hung',
-        title: 'About'
-    })
+    setTimeout(() => {
+        console.log('Done about')
+
+        res.render('about', {
+            name: 'Dang Viet Hung',
+            title: 'About'
+        })
+    }, 10000);
+
+    
 })
 
 // app.com/weather
