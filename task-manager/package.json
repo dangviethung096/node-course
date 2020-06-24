@@ -4,12 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node mongodb.js",
+    "dev": "nodemon mongodb.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "mongodb": "^3.5.9"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
