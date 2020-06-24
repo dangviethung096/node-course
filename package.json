@@ -1,0 +1,28 @@
+{
+  "name": "course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "hbs": "^4.1.1",
+    "postman-request": "^2.88.1-postman.23"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "scripts": {
+    "start": "node web-server/src/app.js",
+    "dev": "nodemon web-server/src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dangviethung096/node-course.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dangviethung096/node-course/issues"
+  },
+  "homepage": "https://github.com/dangviethung096/node-course#readme"
+}
