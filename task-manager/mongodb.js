@@ -6,9 +6,6 @@ const { MongoClient, ObjectID } = require('mongodb')
 const connectionURL = 'mongodb://127.0.0.1:27017'
 const databaseName = 'task-manager'
 
-const id = new ObjectID()
-console.log(id.id.length)
-console.log(id.toHexString().length)
 // console.log(id.getTimestamp())
 
 MongoClient.connect(connectionURL, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
@@ -18,6 +15,23 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true, useUnifiedTopology: 
 
     const db = client.db(databaseName)
 
-    
+    // db.collection('users').deleteMany({
+    //     age: 11
+    // }).then((result) => {
+    //     // Success
+    //     console.log('Success: ', result)
+    // }).catch((error) => {
+    //     // Fail
+    //     console.log('Fail: ', error)
+    // })
+
+    db.collection('tasks').deleteOne({
+        description: 'Go to work'
+    }).then((result) => {
+        console.log('Success: ', result)
+    }).catch((error) => {
+        console.log('Fail: ', error)
+    })
+
 })
 
