@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node mongodb.js",
-    "dev": "nodemon mongodb.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "mongodb": "^3.5.9",
     "mongoose": "^5.9.20",
     "validator": "^13.1.1"
