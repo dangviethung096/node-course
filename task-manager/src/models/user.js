@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
+        unique: true,
         required: true,
         unique: true,
         trim: true,
@@ -37,8 +38,15 @@ const userSchema = new mongoose.Schema({
             if (value.includes('password')) {
                 throw new Error('Password can not contain "password"')
             }
+            
         }
-    }
+    },
+    tokens : [{
+        token : {
+            type: String,
+            required : true
+        }
+    }]
 })
 
 userSchema.statics.findByCredentials = async (email, password) => {
@@ -67,6 +75,17 @@ userSchema.pre('save', async function(next) {
 
     next()
 })
+
+userSchema.methods.generateAuthToken = async function () {
+    const user = this
+    const token = jwt.sign({ _id : user._id.toString() }, 'nodecourse')
+    // Add new token
+    user.tokens = user.tokens.concat(token)
+    // Save
+    await user.save()
+
+    return token
+}
 
 const User = mongoose.model('User', userSchema)
 

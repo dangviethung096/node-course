@@ -33,6 +33,10 @@ router.get('/tasks/:id', async (req, res) => {
         // Get task
         const task = await Task.findById(id)
         // Success
+        if (!task) {
+            return res.status(404).send()
+        }
+
         res.send(task)
     } catch(e) {
         // Send error
@@ -55,7 +59,7 @@ router.patch('/tasks/:id', async (req, res) => {
         
         updates.forEach(update => task[update] = req.body[update])
         
-        task.save()
+        await task.save()
 
         if (!task) {
             return res.status(404).send()
