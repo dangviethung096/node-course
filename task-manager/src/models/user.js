@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const constant = require('../common/constant')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -78,13 +80,26 @@ userSchema.pre('save', async function(next) {
 
 userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const token = jwt.sign({ _id : user._id.toString() }, 'nodecourse')
+    
+    const token = jwt.sign({ _id : user._id.toString() }, constant.keyJwt)
+    console.log('make new token = ' + token + ', private key = ' + constant.keyJwt)
     // Add new token
-    user.tokens = user.tokens.concat(token)
+    user.tokens = user.tokens.concat({ token })
     // Save
     await user.save()
 
     return token
+}
+
+userSchema.methods.toJSON = function () {
+    // Get user
+    const user = this
+    const userObject = user.toObject()
+    // Delete private data
+    delete userObject.password
+    delete userObject.tokens
+
+    return userObject
 }
 
 const User = mongoose.model('User', userSchema)
