@@ -3,15 +3,17 @@ const User = require('../models/user')
 const router = new express.Router()
 
 router.post('/users', async (req, res) => {
-    console.log('Create user')
+    console.log('Create user ' + JSON.stringify(req.body))
     const user = new User(req.body)
 
     try {
         // save to db
         await user.save()    
+        const token = await user.generateAuthToken()
         // success
-        res.status(201).send(user)
+        res.status(201).send({ user, token })
     } catch (e) {
+        console.log(e)
         res.status(400).send(e)
     }
 })
@@ -19,7 +21,10 @@ router.post('/users', async (req, res) => {
 router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
-        res.send(user)
+        const token = await user.generateAuthToken()
+
+
+        res.send({ user , token})
     } catch (e) {
         console.log(e.message)
         res.status(400).send()
